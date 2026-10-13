@@ -1,5 +1,6 @@
 import datetime
 import json
+from random import randint
 import paho.mqtt.client as mqtt
 
 from time import sleep
@@ -16,7 +17,8 @@ class App:
     def start(cls):
         while True:
             try:
-                pl = CaixaService.publish_caixa()
+                travado = bool(randint(0,1))
+                pl = CaixaService.publish_caixa(sensor_travado= travado)
                 print(f"Enviado -> {str(pl)}")
             except Exception as ex:
                 print(f"Algo deu errado: -> {str(ex)}")

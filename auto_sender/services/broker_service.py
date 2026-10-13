@@ -11,7 +11,7 @@ class BrokerService:
         cl = Client(callback_api_version=2)
         cl.connect(config["BROKER_HOST"], config["BROKER_PORT"])
 
-        cl.publish(config["BROKER_TOPIC"], pl)
+        cl.publish(config["BROKER_TOPIC"], pl).wait_for_publish()
         cl.disconnect()
 
         
