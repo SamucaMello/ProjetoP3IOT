@@ -1,4 +1,3 @@
-version: '3.8'
 
 volumes:
   mosquitto_data:
@@ -12,6 +11,20 @@ networks:
     driver: bridge
     
 services:
+  autosender:
+    build:
+      context: ./auto_sender
+      dockerfile: Dockerfile
+    depends_on:
+      - mosquitto
+      - influxdb
+      - nodered
+    container_name: autosender
+    restart: unless-stopped
+    networks:
+      - iot_network
+
+
   mosquitto:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
