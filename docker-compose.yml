@@ -1,0 +1,53 @@
+version: '3.8'
+
+volumes:
+  mosquitto_data:
+  mosquitto_config:
+  mosquitto_log:
+  nodered_data:
+  influxdb_data:
+
+networks:
+  iot_network:
+    driver: bridge
+    
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883" 
+      - "9001:9001"   
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    networks:
+      - iot_network
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    networks:
+      - iot_network
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: node-red
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+    networks:
+      - iot_network
+    depends_on:
+      - mosquitto
+      - influxdb
+
