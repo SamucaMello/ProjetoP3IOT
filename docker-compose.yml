@@ -40,7 +40,7 @@ services:
       - iot_network
 
   influxdb:
-    image: influxdb:2.7
+    image: influxdb:latest
     container_name: influxdb
     restart: always
     ports:
