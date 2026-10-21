@@ -8,4 +8,7 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "app.py"]
+ENV BROKER_HOST=mosquitto 
+ENV BROKER_PORT=1883
+
+CMD python app.py --broker $BROKER_HOST --porta $BROKER_PORT
