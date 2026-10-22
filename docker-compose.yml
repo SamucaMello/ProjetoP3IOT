@@ -3,7 +3,6 @@ volumes:
   mosquitto_data:
   mosquitto_config:
   mosquitto_log:
-  nodered_data:
   influxdb_data:
 
 networks:
@@ -57,7 +56,7 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - nodered_data:/data
+      - ./nodered_data:/data
     networks:
       - iot_network
     depends_on:
