@@ -3,7 +3,8 @@ volumes:
   mosquitto_data:
   mosquitto_config:
   mosquitto_log:
-
+  influxdb_data:
+  
 networks:
   iot_network:
     driver: bridge
@@ -44,7 +45,7 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - ./influxdb_data:/var/lib/influxdb2
+      - influxdb_data:/var/lib/influxdb2
     networks:
       - iot_network
 
