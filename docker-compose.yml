@@ -62,4 +62,4 @@ services:
     depends_on:
       - mosquitto
       - influxdb
-
+    user: "root"
